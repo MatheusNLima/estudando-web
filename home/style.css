@@ -5,7 +5,7 @@
 
 }   
 body{
-    background-color: rgb(56, 56, 56);
+    background-color: lightgray;    
 }
 header{
    
@@ -14,7 +14,7 @@ header{
     text-align: start;
     align-items: center;
     padding-left: 3%;
-    background-color: rgb(255, 0, 195);
+    background-color: hotpink;
     height: 4vh;
 
 }
@@ -25,10 +25,10 @@ footer{
     text-align: end;
     align-items: center;
     padding-right: 3%;
-    background-color: rgb(255, 0, 195);
-    height: 4vh;
+    background-color: hotpink;
+    height: 14vh;
 
 }
 main{
-    height: 92vh;
+
 }
