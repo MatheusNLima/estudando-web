@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ... (array carros e toda a lógica de exibirCarrosDaPagina, paginacao - sem alterações nisso)
+
     const placeholderPrincipal = "placeholder_img/placeholder-400x300.png";
     const placeholderFallback = "placeholder_img/placeholder-400x300_fallback.png";
-    const carros = [ /* ... SEU ARRAY DE 23 CARROS ... */
+
+    const carros = [
         { id: 1, nome: "Fusca TSI Concept", marca: "Volkswagen", ano: 2022, preco: "R$ 95.000,00", fotosUrls: [placeholderPrincipal, placeholderPrincipal, placeholderPrincipal], descricao: "Um clássico reimaginado com motor turbo e design moderno, perfeito para quem busca estilo e performance." },
         { id: 2, nome: "Maverick Hybrid XLT", marca: "Ford", ano: 2023, preco: "R$ 230.000,00", fotosUrls: [placeholderPrincipal, placeholderPrincipal], descricao: "Picape urbana com tecnologia híbrida, oferecendo economia de combustível sem sacrificar a potência." },
         { id: 3, nome: "Civic Si Coupe", marca: "Honda", ano: 2024, preco: "R$ 250.000,00", fotosUrls: [placeholderPrincipal], descricao: "Esportivo com performance afiada e design arrojado, ideal para os amantes de velocidade." },
@@ -27,14 +28,15 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 22, nome: "Commander Overland", marca: "Jeep", ano: 2023, preco: "R$ 280.000,00", fotosUrls: [placeholderPrincipal, placeholderPrincipal], descricao: "SUV de 7 lugares da Jeep, combinando luxo, tecnologia e capacidade off-road." },
         { id: 23, nome: "BYD Dolphin", marca: "BYD", ano: 2024, preco: "R$ 149.800,00", fotosUrls: [placeholderPrincipal, placeholderPrincipal], descricao: "Carro elétrico compacto e ágil, com design moderno e ótima autonomia para a cidade." }
     ];
+
     const vitrineCarros = document.getElementById('vitrine-carros');
     const paginacaoContainer = document.getElementById('paginacao');
     const itensPorPagina = 12;
     let paginaAtual = 1;
     const slideshowState = {};
 
-    function exibirCarrosDaPagina(pagina) { /* ... lógica completa de exibir carros ... */ 
-        if (!vitrineCarros) return;
+    function exibirCarrosDaPagina(pagina) {
+        if (!vitrineCarros) { console.error("#vitrine-carros não encontrado."); return; }
         vitrineCarros.innerHTML = '';
         paginaAtual = pagina;
         const inicio = (pagina - 1) * itensPorPagina;
@@ -55,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             imagemElement.src = fotoInicial;
             estadoAtualSlide.currentIndex = 0;
             imagemElement.alt = `Foto de ${carro.nome}`;
-            imagemElement.onerror = function() { this.src = placeholderFallback; this.alt = `Erro ao carregar ${carro.nome}`; console.warn(`[index] Erro imagem: ${fotoInicial}`); };
+            imagemElement.onerror = function() { this.src = placeholderFallback; this.alt = `Erro ao carregar ${carro.nome}.`; };
 
             const nomeElement = document.createElement('h3'); nomeElement.textContent = carro.nome;
             const infoElement = document.createElement('p'); infoElement.className = 'info'; infoElement.textContent = `${carro.marca} - ${carro.ano}`;
@@ -64,17 +66,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             card.appendChild(imagemElement); card.appendChild(nomeElement); card.appendChild(infoElement); card.appendChild(descricaoElement); card.appendChild(precoElement);
             
-            card.addEventListener('mouseenter', () => { /* ... lógica slideshow ... */ 
+            card.addEventListener('mouseenter', () => {
                 if (carro.fotosUrls && carro.fotosUrls.length > 1) {
                     clearInterval(estadoAtualSlide.intervalId);
                     estadoAtualSlide.intervalId = setInterval(() => {
                         estadoAtualSlide.currentIndex = (estadoAtualSlide.currentIndex + 1) % carro.fotosUrls.length;
                         imagemElement.src = carro.fotosUrls[estadoAtualSlide.currentIndex];
-                        imagemElement.onerror = function() { this.src = placeholderFallback; console.warn(`[index slide] Erro: ${carro.fotosUrls[estadoAtualSlide.currentIndex]}`); };
+                        imagemElement.onerror = function() { this.src = placeholderFallback; };
                     }, 2000);
                 }
             });
-            card.addEventListener('mouseleave', () => { /* ... lógica slideshow ... */
+            card.addEventListener('mouseleave', () => {
                 clearInterval(estadoAtualSlide.intervalId); estadoAtualSlide.intervalId = null; estadoAtualSlide.currentIndex = 0;
                 const primeiraFoto = (carro.fotosUrls && carro.fotosUrls.length > 0 && carro.fotosUrls[0]) ? carro.fotosUrls[0] : placeholderFallback;
                 imagemElement.src = primeiraFoto;
@@ -84,50 +86,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         configurarPaginacao();
     }
-    function configurarPaginacao() { /* ... lógica completa de paginacao ... */
-        if (!paginacaoContainer) return;
+
+    function configurarPaginacao() {
+        if (!paginacaoContainer) { return; }
         paginacaoContainer.innerHTML = '';
         const totalPaginas = Math.ceil(carros.length / itensPorPagina);
-        if (totalPaginas <= 1) return;
+        if (totalPaginas <= 1) { return; }
         if (paginaAtual > 1) { paginacaoContainer.appendChild(criarBotaoPaginacao('Anterior', () => exibirCarrosDaPagina(paginaAtual - 1)));}
         for (let i = 1; i <= totalPaginas; i++) { paginacaoContainer.appendChild(criarBotaoPaginacao(i, () => exibirCarrosDaPagina(i), i === paginaAtual));}
         if (paginaAtual < totalPaginas) { paginacaoContainer.appendChild(criarBotaoPaginacao('Próxima', () => exibirCarrosDaPagina(paginaAtual + 1)));}
     }
-    function criarBotaoPaginacao(texto, callback, desabilitado = false) { /* ... lógica completa criarBotao ... */
+    
+    function criarBotaoPaginacao(texto, callback, desabilitado = false) {
         const botao = document.createElement('button'); botao.textContent = texto;
         botao.addEventListener('click', () => { callback(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         if (desabilitado) { botao.disabled = true; } return botao;
     }
 
-    // --- LÓGICA DO MENU PARA INDEX.HTML ---
     const btnMenu = document.getElementById('btn-menu');
     const navMenu = document.getElementById('nav-menu');
-
-    console.log("Script.js: Tentando encontrar #btn-menu:", btnMenu); // Log para depuração
-    console.log("Script.js: Tentando encontrar #nav-menu:", navMenu); // Log para depuração
-
     if (btnMenu && navMenu) {
-        console.log("Script.js: #btn-menu e #nav-menu encontrados. Adicionando listeners.");
         btnMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('ativo');
-            btnMenu.setAttribute('aria-expanded', navMenu.classList.contains('ativo'));
-            console.log("Script.js: Botão do menu clicado, classe 'ativo' no navMenu:", navMenu.classList.contains('ativo'));
+            const isExpanded = navMenu.classList.toggle('ativo');
+            btnMenu.setAttribute('aria-expanded', isExpanded);
         });
-
         document.addEventListener('click', function(event) {
             if (navMenu.classList.contains('ativo') && !navMenu.contains(event.target) && !btnMenu.contains(event.target)) {
                 navMenu.classList.remove('ativo');
                 btnMenu.setAttribute('aria-expanded', 'false');
-                console.log("Script.js: Clicou fora, menu fechado.");
             }
         });
     } else {
-        console.error("Script.js: Erro! #btn-menu ou #nav-menu NÃO encontrado(s) no DOM de index.html.");
+        console.error("Erro: Elementos do menu #btn-menu ou #nav-menu não encontrados em index.html.");
     }
 
     if (vitrineCarros) {
         exibirCarrosDaPagina(paginaAtual);
     } else {
-        console.error("Elemento com ID 'vitrine-carros' não encontrado!");
+        console.error("Elemento #vitrine-carros não encontrado!");
     }
 });

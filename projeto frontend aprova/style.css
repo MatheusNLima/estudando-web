@@ -28,7 +28,7 @@ header {
     align-items: center;
     z-index: 1001;
     height: 60px;
-    position: relative; /* Mantém o header como bloco de contêiner para o botão */
+    position: relative; 
 }
 
 header h1 {
@@ -45,20 +45,17 @@ header h1 a, header h1 a:visited, header h1 a:hover {
 
 #btn-menu {
     font-size: 1.8em;
-    background: none;         /* << REMOVIDO ESTILO DE DEPURAÇÃO (era red) */
-    border: none;           /* << REMOVIDO ESTILO DE DEPURAÇÃO (era 2px solid yellow) */
-    color: white;           /* << RESTAURADO (era black) */
+    background: none;        
+    border: none;          
+    color: white;          
     cursor: pointer;
     padding: 5px 10px; 
     z-index: 1002;     
-    
     position: absolute;
     left: 15px; 
     top: 50%;   
     transform: translateY(-50%); 
 }
-
-/* ... (O restante do style.css permanece o mesmo da última versão funcional) ... */
 
 #nav-menu {
     display: none;
@@ -115,13 +112,14 @@ main h2 {
     color: #2c3e50;
 }
 
-#vitrine-carros {
+#vitrine-carros, 
+#vitrine-interesses { 
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
-    justify-content: center;
+    justify-content: center; 
     margin-bottom: 35px;
-    align-items: stretch;
+    align-items: stretch; 
 }
 
 .carro-card {
@@ -187,13 +185,15 @@ main h2 {
     text-align: right;
 }
 
-#paginacao {
+#paginacao,
+#paginacao-interesses { 
     text-align: center;
     margin-top: 40px;
     padding-bottom: 25px;
 }
 
-#paginacao button {
+#paginacao button,
+#paginacao-interesses button { 
     background-color: #34495e;
     color: white;
     border: none;
@@ -206,12 +206,14 @@ main h2 {
     font-weight: 500;
 }
 
-#paginacao button:hover:not(:disabled) {
+#paginacao button:hover:not(:disabled),
+#paginacao-interesses button:hover:not(:disabled) {
     background-color: #007bff;
     transform: translateY(-2px);
 }
 
-#paginacao button:disabled {
+#paginacao button:disabled,
+#paginacao-interesses button:disabled {
     background-color: #bdc3c7;
     color: #7f8c8d;
     cursor: not-allowed;
@@ -250,11 +252,6 @@ footer p {
      .carro-card img { height: 220px; }
 }
 
-body#detalhe-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
-}
 body#detalhe-page main#detalhe-carro-container {
     flex-grow: 1;
 }

@@ -1,8 +1,5 @@
 /* detalhe.css */
-/* O seletor body#detalhe-page {} que estava aqui foi removido,
-   pois suas regras foram incorporadas ao style.css principal para o body. */
-
-   #detalhe-carro-container {
+#detalhe-carro-container {
     max-width: 960px;
     margin: 30px auto;
     padding: 30px;
